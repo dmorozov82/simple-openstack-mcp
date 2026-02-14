@@ -72,7 +72,7 @@ tool_timeout_sec = 120
 env = { MCP_ALLOW_DESTRUCTIVE = "1" }
 ```
 
-For multimple Regions add several sections like and check AGENTS.md:
+For multimple Regions add several sections to `~/.codex/config.toml`; check, customize and copy `AGENTS.md` to your `~/.codex/` dir:
 
 ```toml
 [mcp_servers.reg1]
