@@ -1,6 +1,11 @@
 
 # simple-openstack-mcp
 This is a `fastmcp`-based MCP server that allows an LLM to execute complex OpenStack commands for you in an environment where `openstack-cli` is runnable.
+This FORK designed to block or allow DESTRUCTIVE operations and can work with multimple regions - check AGENTS.md instructions.
+
+> [!NOTE]
+> In this fork, only commands containing the verbs `delete` or `purge` are treated as **DESTRUCTIVE** and blocked by default.
+> Other mutating OpenStack actions (for example `create`, `set`, `unset`, `start`, `stop`, `reboot`) are not blocked by this specific guard.
 
 ## How To
 
@@ -28,6 +33,7 @@ clouds:
 This build uses safer command execution defaults:
 
 - Commands are executed with `shell=False` and tokenized by `shlex.split`.
+- `exec_openstack.cmd` is trimmed and whitespace-normalized via tokenization; if it does not start with `openstack`, the prefix is added automatically.
 - Destructive verbs are blocked by default: `delete`, `purge`.
 - To explicitly allow destructive commands, set `MCP_ALLOW_DESTRUCTIVE=1` in the server environment.
 - If `${PWD}/clouds.yaml` exists, `OS_CLIENT_CONFIG_FILE` is set via `os.environ.setdefault` (so an existing env value is preserved).
@@ -63,6 +69,19 @@ cwd = "/YOUPATH/openstack-mcp-h"
 startup_timeout_sec = 30
 tool_timeout_sec = 120
 env = { MCP_ALLOW_DESTRUCTIVE = "1" }
+```
+
+For multimple Regions add several sections like:
+
+```toml
+[mcp_servers.reg1]
+...
+
+[mcp_servers.reg2]
+...
+
+[mcp_servers.regX]
+...
 ```
 
 ### Claude Desktop / VSCode Copilot

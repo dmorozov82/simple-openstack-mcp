@@ -15,8 +15,6 @@ def exec_openstack(
     """
     Execute an OpenStack CLI command.
     """
-    if not cmd.strip().startswith("openstack"):
-        raise ValueError("Command must start with 'openstack'")
     if timeout <= 0:
         raise ValueError("timeout must be greater than 0")
     return OpenStackCommander.execute(

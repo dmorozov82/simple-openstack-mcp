@@ -7,6 +7,15 @@ class OpenStackCommander:
     _DESTRUCTIVE_VERBS = {"delete", "purge"}
 
     @staticmethod
+    def _normalize_command(command: str) -> list[str]:
+        args = shlex.split(command.strip())
+        if not args:
+            raise ValueError("Command must not be empty")
+        if args[0] != "openstack":
+            args = ["openstack", *args]
+        return args
+
+    @staticmethod
     def execute(
         command: str,
         timeout: int = 60,
@@ -14,9 +23,9 @@ class OpenStackCommander:
         region: str | None = None,
     ) -> str:
         try:
-            args = shlex.split(command)
-            if not args or args[0] != "openstack":
-                raise ValueError("Command must start with 'openstack'")
+            args = OpenStackCommander._normalize_command(command)
+            if args[0] != "openstack":
+                raise ValueError("Only OpenStack CLI commands are allowed")
 
             allow_destructive = os.environ.get("MCP_ALLOW_DESTRUCTIVE") == "1"
             if not allow_destructive:
