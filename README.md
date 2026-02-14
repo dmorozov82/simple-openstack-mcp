@@ -23,7 +23,49 @@ clouds:
     identity_api_version: 3
 ```
 
+### Hardened behavior (in this fork)
+
+This build uses safer command execution defaults:
+
+- Commands are executed with `shell=False` and tokenized by `shlex.split`.
+- Destructive verbs are blocked by default: `delete`, `purge`.
+- To explicitly allow destructive commands, set `MCP_ALLOW_DESTRUCTIVE=1` in the server environment.
+- If `${PWD}/clouds.yaml` exists, `OS_CLIENT_CONFIG_FILE` is set via `os.environ.setdefault` (so an existing env value is preserved).
+
+The `exec_openstack` tool also supports optional parameters:
+
+- `cloud`: maps to `--os-cloud`
+- `region`: maps to `--os-region-name`
+- `timeout`: command timeout in seconds (default: `60`)
+
 ### Connecting the MCP Tool
+
+### Codex (config.toml)
+
+If you are using Codex, add an MCP server entry to `~/.codex/config.toml`:
+
+```toml
+[mcp_servers.openstack]
+command = "zsh"
+args = ["-lc", "source /PATHTOOPENRC/openrc; uv run -m server"]
+cwd = "/YOUPATH/openstack-mcp-h"
+startup_timeout_sec = 30
+tool_timeout_sec = 120
+```
+
+To allow destructive verbs in Codex for a controlled environment:
+
+```toml
+[mcp_servers.openstack]
+command = "zsh"
+args = ["-lc", "source /PATHTOOPENRC/openrc; uv run -m server"]
+cwd = "/YOUPATH/openstack-mcp-h"
+startup_timeout_sec = 30
+tool_timeout_sec = 120
+env = { MCP_ALLOW_DESTRUCTIVE = "1" }
+```
+
+### Claude Desktop / VSCode Copilot
 
 If you are using `Claude Desktop` or `VScode Copilot`, add the following to your claude_desktop_config.json. You can add similar settings to other LLM clients you wish to use.
 
@@ -43,6 +85,22 @@ If you are using `Claude Desktop` or `VScode Copilot`, add the following to your
 }
 ```
 
+To allow destructive verbs for a controlled environment:
+
+```json
+{
+  "mcpServers": {
+    "openstack": {
+      "command": "uv",
+      "args": ["--directory", "${REPOSITORY_ABS_PATH}/simple-openstack-mcp", "-m", "server"],
+      "env": {
+        "MCP_ALLOW_DESTRUCTIVE": "1"
+      }
+    }
+  }
+}
+```
+
 If you don't have the repository cloned locally, you can also run it with uvx:
 
 ```json
@@ -59,6 +117,7 @@ If you don't have the repository cloned locally, you can also run it with uvx:
     }
 }
 ```
+
 ## Running the fastmcp Server locally
 
 The following commands should run successfully from the repository directory:
