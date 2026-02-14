@@ -1,7 +1,8 @@
 
 # simple-openstack-mcp
 This is a `fastmcp`-based MCP server that allows an LLM to execute complex OpenStack commands for you in an environment where `openstack-cli` is runnable.
-This FORK designed to block or allow DESTRUCTIVE operations and can work with multimple regions - check AGENTS.md instructions.
+
+This FORK can work with multiple regions - check and customize AGENTS.md.
 
 > [!NOTE]
 > In this fork, only commands containing the verbs `delete` or `purge` are treated as **DESTRUCTIVE** and blocked by default.
