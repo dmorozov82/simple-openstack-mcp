@@ -72,7 +72,7 @@ tool_timeout_sec = 120
 env = { MCP_ALLOW_DESTRUCTIVE = "1" }
 ```
 
-For multimple Regions add several sections like:
+For multimple Regions add several sections like and check AGENTS.md:
 
 ```toml
 [mcp_servers.reg1]
