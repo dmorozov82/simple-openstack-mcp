@@ -2,7 +2,7 @@
 # simple-openstack-mcp
 This is a `fastmcp`-based MCP server that allows an LLM to execute complex OpenStack commands for you in an environment where `openstack-cli` is runnable.
 
-This FORK can work with multiple regions - check and customize AGENTS.md.
+This FORK can work with multiple regions - check and customize `AGENTS.md` in the repository root.
 
 > [!NOTE]
 > In this fork, only commands containing the verbs `delete` or `purge` are treated as **DESTRUCTIVE** and blocked by default.
@@ -28,6 +28,20 @@ clouds:
     interface: "public"
     identity_api_version: 3
 ```
+
+### Clone path and AGENTS.md location
+
+The examples below use `cwd = "/YOUPATH/openstack-mcp-h"`, so clone this repository to that path (or adjust `cwd` in every config snippet):
+
+```bash
+git clone https://github.com/dmorozov82/simple-openstack-mcp.git /YOUPATH/openstack-mcp-h
+```
+
+`AGENTS.md` placement:
+
+- Repo-level file to edit region aliases: `/YOUPATH/openstack-mcp-h/AGENTS.md`
+- Codex global instructions file: `~/.codex/AGENTS.md` (copy or merge from the repo file)
+- Cursor itself does not read `AGENTS.md`; it only uses `~/.cursor/mcp.json`
 
 ### Hardened behavior (in this fork)
 
@@ -72,7 +86,7 @@ tool_timeout_sec = 120
 env = { MCP_ALLOW_DESTRUCTIVE = "1" }
 ```
 
-For multimple Regions add several sections to `~/.codex/config.toml`; check, customize and copy `AGENTS.md` to your `~/.codex/` dir:
+For multimple Regions add several sections to `~/.codex/config.toml`; check and customize `/YOUPATH/openstack-mcp-h/AGENTS.md`, then copy (or merge) it into `~/.codex/AGENTS.md`:
 
 ```toml
 [mcp_servers.reg1]
