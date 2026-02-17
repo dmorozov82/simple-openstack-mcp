@@ -85,6 +85,64 @@ For multimple Regions add several sections to `~/.codex/config.toml`; check, cus
 ...
 ```
 
+### Cursor (`mcp.json`)
+
+If you are using Cursor, create or update `~/.cursor/mcp.json`:
+
+```json
+{
+  "mcpServers": {
+    "openstack": {
+      "command": "zsh",
+      "args": [
+        "-lc",
+        "source /PATHTOOPENRC/openrc; uv run -m server"
+      ],
+      "cwd": "/YOUPATH/openstack-mcp-h"
+    }
+  }
+}
+```
+
+To allow destructive verbs for a controlled environment:
+
+```json
+{
+  "mcpServers": {
+    "openstack": {
+      "command": "zsh",
+      "args": [
+        "-lc",
+        "source /PATHTOOPENRC/openrc; uv run -m server"
+      ],
+      "cwd": "/YOUPATH/openstack-mcp-h",
+      "env": {
+        "MCP_ALLOW_DESTRUCTIVE": "1"
+      }
+    }
+  }
+}
+```
+
+For multiple regions in Cursor, define separate MCP servers:
+
+```json
+{
+  "mcpServers": {
+    "reg1": {
+      "command": "zsh",
+      "args": ["-lc", "source /PATH/openrc-reg1; uv run -m server"],
+      "cwd": "/YOUPATH/openstack-mcp-h"
+    },
+    "reg2": {
+      "command": "zsh",
+      "args": ["-lc", "source /PATH/openrc-reg2; uv run -m server"],
+      "cwd": "/YOUPATH/openstack-mcp-h"
+    }
+  }
+}
+```
+
 ### Claude Desktop / VSCode Copilot
 
 If you are using `Claude Desktop` or `VScode Copilot`, add the following to your claude_desktop_config.json. You can add similar settings to other LLM clients you wish to use.
