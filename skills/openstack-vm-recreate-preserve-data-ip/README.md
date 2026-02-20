@@ -7,6 +7,10 @@ Skill for safe OpenStack VM recreation with strict data/IP preservation and shor
 - `SKILL.md`: workflow and command templates
 - `README.md`: usage and defaults override guide
 
+## Attention:
+
+You MUST set explicitly to allow destructive commands, set `MCP_ALLOW_DESTRUCTIVE=1` in the server environment, at least for `continue recreate` after approval.
+
 ## How to call in chat
 
 Use direct trigger text. Examples:
