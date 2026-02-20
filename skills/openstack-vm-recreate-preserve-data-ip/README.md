@@ -22,7 +22,7 @@ Use direct trigger text. Examples:
 ## Current defaults
 
 - `region`: `reg1` # How alias is defined in your AGENTS.md or set explicitly 
-- `project_id`: `0563ffce846247f09332c24c656f1b5e`
+- `project_id`: `0adf69335c0e4f51bed687e1be06f302`
 - `target_az`: `az-1`
 - `key_name`: `admin`
 - `api_timeout_sec`: `30`

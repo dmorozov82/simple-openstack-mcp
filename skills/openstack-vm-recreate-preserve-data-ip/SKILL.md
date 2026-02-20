@@ -8,7 +8,7 @@ description: Safely recreate OpenStack VM(s) in a target AZ while preserving att
 ## Runtime Defaults
 
 - `region`: `reg1`
-- `project_id`: `0563ffce846247f09332c24c656f1b5e`
+- `project_id`: `0adf69335c0e4f51bed687e1be06f302`
 - `target_az`: `az-1`
 - `key_name`: `admin`
 - `api_timeout_sec`: `30`
